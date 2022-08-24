@@ -3,5 +3,7 @@
 CREATE TABLE locations(
     id serial PRIMARY KEY,
     name varchar(300),
-    coordinates varchar(100)
+    description TEXT,
+    coordinates varchar(100),
+    status BOOLEAN default true
 );
