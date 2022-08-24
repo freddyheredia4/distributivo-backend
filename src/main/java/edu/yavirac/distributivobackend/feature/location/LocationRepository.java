@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface LocationRepository extends CrudRepository<Location,Long> {
     List<Location> findAll();
+    List<Location> findByNameLikeIgnoreCase(String term);
 
  
 }
