@@ -6,9 +6,12 @@ CREATE TABLE locations(
     coordinates varchar(100)
 );
 --TABLE DOCENTE 
-create table docente(
-	cedula SERIAL NOT NULL,
-	nombre CHARACTER VARYING (100),
-	ingreso date,
-	PRIMARY KEY (cedula)
+create table teacher(
+	id SERIAL , 
+	dni CHARACTER VARYING (10),
+	name CHARACTER VARYING (100),
+	direction CHARACTER VARYING (100),
+	phone CHARACTER VARYING (10),
+	email CHARACTER VARYING (100),
+	PRIMARY KEY (id)
 )
