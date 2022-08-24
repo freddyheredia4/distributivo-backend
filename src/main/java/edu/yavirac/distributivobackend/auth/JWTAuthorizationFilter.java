@@ -1,4 +1,4 @@
-package edu.yavirac.distributivobackend.auth.security;
+package edu.yavirac.distributivobackend.auth;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;

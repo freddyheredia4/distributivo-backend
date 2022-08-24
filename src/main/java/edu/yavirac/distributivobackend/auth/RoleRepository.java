@@ -1,4 +1,4 @@
-package edu.yavirac.distributivobackend.auth.security;
+package edu.yavirac.distributivobackend.auth;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;

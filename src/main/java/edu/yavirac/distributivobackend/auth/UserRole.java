@@ -1,4 +1,4 @@
-package edu.yavirac.distributivobackend.auth.security;
+package edu.yavirac.distributivobackend.auth;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
@@ -6,15 +6,16 @@ import org.springframework.data.relational.core.mapping.Table;
 import lombok.Data;
 
 @Data
-@Table("auth\".\"roles_authorities")
-public class RoleAuthority {
-
+@Table("auth\".\"users_roles")
+public class UserRole {
     @Id
-    @Column("role_authority_id")
+    @Column("user_role_id")
     private long id;
+
+    @Column("user_id")
+    private long userId;
+
     @Column("role_id")
     private long roleId;
-    @Column("authority_id")
-    private long authorityId;
-
+    
 }
