@@ -14,4 +14,4 @@ create table teacher(
 	phone CHARACTER VARYING (10),
 	email CHARACTER VARYING (100),
 	PRIMARY KEY (id)
-)
+);
