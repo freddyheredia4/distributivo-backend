@@ -24,8 +24,12 @@ public class LocationController {
     }
 
     @GetMapping()
-    public List<Location> findAll(){
-        return LocationService.findAll();
+    public LocationDTO findAll(
+        @RequestParam(value="count", defaultValue = "10", required = false) long capacity,
+        @RequestParam(value = "page", defaultValue = "0", required = true) long page
+    ){
+       
+        return LocationService.findAll(capacity, page);
     }
 
     @PutMapping("/{id}")
@@ -44,5 +48,4 @@ public class LocationController {
     public List<Location> findByName(@PathVariable String name){
         return LocationService.findByName(name);
     }
-
 }

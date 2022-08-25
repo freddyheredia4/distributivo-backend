@@ -10,8 +10,18 @@ public class LocationService {
     @Autowired
     LocationRepository locationRepository;
 
-    public List<Location> findAll(){
-        return locationRepository.findAll();
+    public LocationDTO findAll(long capacity,long page){
+    
+       long offset = page <= 0? 0 : page * capacity;
+        
+        LocationDTO dto = new LocationDTO();
+        dto.setLocations(locationRepository.findAll(capacity, offset));
+        dto.setTotal(locationRepository.count());
+        dto.setCount(dto.getLocations().size());
+        dto.setCapacity(capacity);
+        dto.setPage(page);
+        return dto;
+       
     }
 
     public Location save(Location Location){
