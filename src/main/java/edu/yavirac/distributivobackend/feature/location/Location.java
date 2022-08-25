@@ -9,7 +9,10 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("public\".\"locations")
 public class Location {
     @Id
-    @Column("id")
+    @Column("id") 
+    private Long id;
     private String name;
+    private String description;
     private String coordinates;
+    private boolean status;
 }

@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin({"*"})
 @RestController
 @RequestMapping("/api/location")
-@CrossOrigin({"*"})
 public class LocationController {
     @Autowired
     LocationService LocationService;
