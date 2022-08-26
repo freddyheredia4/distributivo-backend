@@ -14,5 +14,5 @@ public class Location {
     private String name;
     private String description;
     private String coordinates;
-    private boolean status;
+    private boolean status =  true;
 }
