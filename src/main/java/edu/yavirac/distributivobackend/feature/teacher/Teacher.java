@@ -17,4 +17,5 @@ public class Teacher {
     private String direction;
     private String phone;
     private String email;
+    private Boolean estado;
 }

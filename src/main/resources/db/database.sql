@@ -13,5 +13,6 @@ create table teacher(
 	direction CHARACTER VARYING (100),
 	phone CHARACTER VARYING (10),
 	email CHARACTER VARYING (100),
+	estado boolean,
 	PRIMARY KEY (id)
 );
