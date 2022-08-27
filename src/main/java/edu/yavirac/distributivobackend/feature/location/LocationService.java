@@ -1,17 +1,35 @@
 package edu.yavirac.distributivobackend.feature.location;
-
+import edu.yavirac.distributivobackend.util.ExcelGenerator;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
 @Service
 public class LocationService {
     @Autowired
     LocationRepository locationRepository;
 
-    public List<Location> findAll(){
-        return locationRepository.findAll();
+    public LocationDTO findAll(long capacity,long page){
+    
+       long offset = page <= 0? 0 : page * capacity;
+        
+        LocationDTO dto = new LocationDTO();
+        dto.setLocations(locationRepository.findAll(capacity, offset));
+        dto.setTotal(locationRepository.count());
+        dto.setCount(dto.getLocations().size());
+        dto.setCapacity(capacity);
+        dto.setPage(page);
+        return dto;
+       
     }
 
     public Location save(Location Location){
@@ -31,8 +49,45 @@ public class LocationService {
         locationRepository.deleteById(id);
     }
 
+
     public List<Location> findByName(String name){
         return locationRepository.findByNameLikeIgnoreCase(name+"%");
     }
+    
+    public void generateExcelFile(HttpServletResponse response) throws IOException{
 
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachment; filename=location.xlsx";
+        response.setHeader(headerKey, headerValue);
+        List<String> rows  = Arrays.asList("NAME", "CORDENADAS", "DESCRIPTION");
+        ExcelGenerator excelGenerator = new ExcelGenerator();
+        excelGenerator.generateExcelFile(response, rows);
+
+    }
+    
+    public List<Location> importExcel(MultipartFile files) throws IOException{
+        List<Location> locationList = new ArrayList<>();
+
+        try (XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream())) {
+            XSSFSheet worksheet = workbook.getSheetAt(0);
+
+            for (int index = 0; index < worksheet.getPhysicalNumberOfRows(); index++) {
+                if (index > 0) {
+                    Location location = new Location();
+
+                    XSSFRow row = worksheet.getRow(index);
+
+                    location.setName(row.getCell(0).getStringCellValue());
+                    location.setCoordinates(row.getCell(1).getStringCellValue());
+                    location.setDescription(row.getCell(2).getStringCellValue());
+
+                    locationList.add(locationRepository.save(location));
+                    
+                }
+            }
+        }
+        return locationList;
+    }
+    
 }
