@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+//import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,10 +42,11 @@ public class LocationController {
         return LocationService.update(id,Location);
     }
 
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id){
+    @GetMapping("delete/{id}")
+    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    public String delete(@PathVariable long id){
         LocationService.deleteById(id);
+        return "si";
     }
 
     @GetMapping("/find/{name}")

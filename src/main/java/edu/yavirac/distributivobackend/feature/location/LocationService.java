@@ -46,7 +46,7 @@ public class LocationService {
     }
 
     public void deleteById(long id){
-        locationRepository.deleteById(id);
+        locationRepository.deleteLocation(id);
     }
 
 
