@@ -25,7 +25,7 @@ public class LocationService {
         LocationDTO dto = new LocationDTO();
         dto.setLocations(locationRepository.findAll(capacity, offset));
         dto.setTotal(locationRepository.count());
-        dto.setCount(dto.getLocations().size());
+        dto.setTotalPages(dto.getTotal() / capacity + 1);
         dto.setCapacity(capacity);
         dto.setPage(page);
         return dto;

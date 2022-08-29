@@ -13,7 +13,7 @@ public interface LocationRepository extends CrudRepository<Location, Long> {
 
     final String DELETE = "UPDATE locations SET status=false WHERE id=:id";
     final String SELECT_ALL = "SELECT * FROM locations WHERE status=true LIMIT :limit offset :offset";
-    final String FIND_IGNORE_CASE = "SELECT * FROM locations WHERE name ILIKE 'a%x' AND status=true";
+    final String FIND_IGNORE_CASE = "SELECT * FROM locations WHERE name LIKE '%' || :name || '%'";
     final String FIND = "SELECT * FROM locations WHERE id=:id";
     final String COUNT = "SELECT COUNT(*) FROM locations WHERE status = true";
 
@@ -21,7 +21,7 @@ public interface LocationRepository extends CrudRepository<Location, Long> {
     List<Location> findAll(@Param("limit") long limit, @Param("offset") long offset );
 
     @Query(value = FIND_IGNORE_CASE)
-    List<Location> findByNameLikeIgnoreCase(String term);
+    List<Location> findByNameLikeIgnoreCase(@Param("name") String term);
 
     @Query(value = FIND)
     Optional<Location> findById(@Param("id") Long id);

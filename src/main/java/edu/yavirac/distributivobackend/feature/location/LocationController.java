@@ -36,13 +36,13 @@ public class LocationController {
         return LocationService.findAll(capacity, page);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/")
     public Location update(@RequestBody Location Location,@PathVariable long id)
     {
         return LocationService.update(id,Location);
     }
 
-    @DeleteMapping("/{id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id){
         LocationService.deleteById(id);

@@ -7,7 +7,7 @@ import lombok.Data;
 public class LocationDTO {
     private long total;
     private long page;
-    private long count;
+    private long totalPages;
     private long capacity;
     private List<Location> locations;
 }
