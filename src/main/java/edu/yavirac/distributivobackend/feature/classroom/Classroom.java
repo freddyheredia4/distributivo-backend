@@ -1,19 +1,21 @@
-package edu.yavirac.distributivobackend.feature.location;
+package edu.yavirac.distributivobackend.feature.classroom;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+
 @Data
-@Table("public\".\"locations")
-public class Location {
+@Table("public\".\"classrooms")
+public class Classroom {
     @Id
     @Column("id") 
     private Long id;
+    private Long type;
+    private Long location;
     private String name;
+    private Long capacity;
     private String description;
-    private long latitude;
-    private long longitude;
     private boolean status =  true;
 }

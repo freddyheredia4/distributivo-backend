@@ -18,18 +18,22 @@ public class LocationService {
     @Autowired
     LocationRepository locationRepository;
 
-    public LocationDTO findAll(long capacity,long page){
+    public LocationDTO findAllPageable(long capacity,long page){
     
        long offset = page <= 0? 0 : page * capacity;
         
         LocationDTO dto = new LocationDTO();
-        dto.setLocations(locationRepository.findAll(capacity, offset));
+        dto.setLocations(locationRepository.findAllPageable(capacity, offset));
         dto.setTotal(locationRepository.count());
         dto.setTotalPages(dto.getTotal() / capacity + 1);
         dto.setCapacity(capacity);
         dto.setPage(page);
         return dto;
        
+    }
+
+    public List<Location> findAll(){
+        return locationRepository.findAll();
     }
 
     public Location save(Location Location){
@@ -60,7 +64,7 @@ public class LocationService {
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=location.xlsx";
         response.setHeader(headerKey, headerValue);
-        List<String> rows  = Arrays.asList("NAME", "CORDENADAS", "DESCRIPTION");
+        List<String> rows  = Arrays.asList("NAME", "DESCRIPTION", "LATITUD", "LONGITUD");
         ExcelGenerator excelGenerator = new ExcelGenerator();
         excelGenerator.generateExcelFile(response, rows);
 
@@ -79,8 +83,9 @@ public class LocationService {
                     XSSFRow row = worksheet.getRow(index);
 
                     location.setName(row.getCell(0).getStringCellValue());
-                    location.setCoordinates(row.getCell(1).getStringCellValue());
-                    location.setDescription(row.getCell(2).getStringCellValue());
+                    location.setDescription(row.getCell(1).getStringCellValue());
+                    location.setLatitude(Math.round(row.getCell(2).getNumericCellValue()));
+                    location.setLongitude(Math.round(row.getCell(3).getNumericCellValue()));
 
                     locationList.add(locationRepository.save(location));
                     

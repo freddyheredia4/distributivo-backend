@@ -3,17 +3,19 @@ CREATE TABLE locations(
     id serial PRIMARY KEY,
     name varchar(300),
     description TEXT,
-    coordinates varchar(100),
+    latitude bigint,
+    longitude bigint,
     status BOOLEAN default true
 );
 
 --TABLE CLASSROOM
 CREATE TABLE classrooms(
     id serial primary key,
-    type integer,
+   type integer,
     location integer,
     name varchar(100),
     capacity int,
+    description text,
     status boolean default true
 );
 
@@ -51,3 +53,6 @@ FOREIGN KEY(type) REFERENCES classroom_types(id);
 ALTER TABLE means_classrom ADD CONSTRAINT
 fk_mean_classroom
 FOREIGN KEY(classroom) REFERENCES classrooms(id);
+
+ALTER TABLE locations alter column latitude type bigint;
+ALTER TABLE locations alter column longitude type bigint;

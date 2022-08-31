@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +33,7 @@ public class LocationController {
         @RequestParam(value = "page", defaultValue = "0", required = true) long page
     ){
        
-        return LocationService.findAll(capacity, page);
+        return LocationService.findAllPageable(capacity, page);
     }
 
     @PutMapping("/")
@@ -41,13 +41,20 @@ public class LocationController {
     {
         return LocationService.update(id,Location);
     }
-
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @GetMapping("delete/{id}")
-    //@ResponseStatus(HttpStatus.NO_CONTENT)
+    
     public String delete(@PathVariable long id){
         LocationService.deleteById(id);
         return "si";
     }
+
+    @GetMapping("/findAll")
+    public List<Location> findAll(){
+       
+        return LocationService.findAll();
+    }
+
 
     @GetMapping("/find/{name}")
     public List<Location> findByName(@PathVariable String name){
