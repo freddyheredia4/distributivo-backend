@@ -7,9 +7,9 @@
 -- Database creation must be performed outside a multi lined SQL file. 
 -- These commands were put in this file only as a convenience.
 -- 
--- object: prueba | type: DATABASE --
--- DROP DATABASE IF EXISTS prueba;
-CREATE DATABASE prueba
+-- object: distributivodb | type: DATABASE --
+-- DROP DATABASE IF EXISTS distributivodb;
+CREATE DATABASE distributivodb
 	ENCODING = 'UTF8'
 	LC_COLLATE = 'es_EC.UTF-8'
 	LC_CTYPE = 'es_EC.UTF-8'
@@ -421,6 +421,7 @@ CREATE TABLE public.grade (
 	working_day integer,
 	level integer,
 	parallel integer,
+	status boolean DEFAULT true,
 	CONSTRAINT grade_pk PRIMARY KEY (id)
 );
 -- ddl-end --
@@ -740,13 +741,6 @@ REFERENCES public.classrooms (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
--- object: periodo_lectivo_fk | type: CONSTRAINT --
--- ALTER TABLE public.request DROP CONSTRAINT IF EXISTS periodo_lectivo_fk CASCADE;
-ALTER TABLE public.request ADD CONSTRAINT periodo_lectivo_fk FOREIGN KEY (school_time)
-REFERENCES public.school_period (id) MATCH SIMPLE
-ON DELETE NO ACTION ON UPDATE NO ACTION;
--- ddl-end --
-
 -- object: "fk-asignatura_docente" | type: CONSTRAINT --
 -- ALTER TABLE public.size_request DROP CONSTRAINT IF EXISTS "fk-asignatura_docente" CASCADE;
 ALTER TABLE public.size_request ADD CONSTRAINT "fk-asignatura_docente" FOREIGN KEY (teaching_subject)
@@ -758,6 +752,13 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ALTER TABLE public.size_request DROP CONSTRAINT IF EXISTS solicitud_fk CASCADE;
 ALTER TABLE public.size_request ADD CONSTRAINT solicitud_fk FOREIGN KEY (request)
 REFERENCES public.request (id) MATCH SIMPLE
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: periodo_lectivo_fk | type: CONSTRAINT --
+-- ALTER TABLE public.request DROP CONSTRAINT IF EXISTS periodo_lectivo_fk CASCADE;
+ALTER TABLE public.request ADD CONSTRAINT periodo_lectivo_fk FOREIGN KEY (school_time)
+REFERENCES public.school_period (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
