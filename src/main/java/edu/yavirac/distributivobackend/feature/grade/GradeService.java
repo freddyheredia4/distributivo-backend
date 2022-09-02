@@ -33,6 +33,11 @@ public class GradeService {
         return dto;
 
     }
+    
+    public List<GradeForCareer>  findAllByCareer(){
+
+
+    }
 
     public Grade save(Grade grade) {
 

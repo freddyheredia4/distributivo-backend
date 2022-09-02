@@ -26,6 +26,13 @@ public class GradeController {
     public Grade findById(@PathVariable long id){
         return gradeService.findById(id);
     }
+    
+    @GetMapping()
+    public GradeDTO findAllByCareer(
+    ){
+       
+        return gradeService.findAllByCareer();
+    }
 
     @GetMapping()
     public GradeDTO findAll(
