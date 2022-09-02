@@ -11,20 +11,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin({"*"})
 @RestController
-@RequestMapping("/api/classroom")
+@RequestMapping("/api/grade")
 public class GradeController {
     @Autowired
-    GradeService classroomService;
+    GradeService gradeService;
 
     @PostMapping()
-    public Grade save(@RequestBody Grade classroom){
-        System.out.println("ClassRoomController.update()\n"+ classroom);
-        return classroomService.save(classroom);
+    public Grade save(@RequestBody Grade grade){
+        System.out.println("gradeController.update()\n"+ grade);
+        return gradeService.save(grade);
     }
 
     @GetMapping("/{id}")
     public Grade findById(@PathVariable long id){
-        return classroomService.findById(id);
+        return gradeService.findById(id);
     }
 
     @GetMapping()
@@ -33,36 +33,36 @@ public class GradeController {
         @RequestParam(value = "page", defaultValue = "0", required = true) long page
     ){
        
-        return classroomService.findAll(capacity, page);
+        return gradeService.findAll(capacity, page);
     }
     
     @PostMapping("/update")
-    public Grade update(@RequestBody Grade classroom)
+    public Grade update(@RequestBody Grade grade)
     {
-        return classroomService.update(classroom);
+        return gradeService.update(grade);
     }
 
     @GetMapping("delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String delete(@PathVariable long id){
-        classroomService.deleteById(id);
+        gradeService.deleteById(id);
         return "si";
     }
 
     @GetMapping("/find/{name}")
     public List<Grade> findByName(@PathVariable String name){
-        return classroomService.findByName(name);
+        return gradeService.findByName(name);
     }
     @PostMapping(value = "/import-excel")
     public List<Grade> importExcelFile(@RequestParam("file") MultipartFile files) throws IOException {
         
-        return classroomService.importExcel(files);
+        return gradeService.importExcel(files);
     }
     
     @GetMapping("/export-to-excel")
     public void exportIntoExcelFile(HttpServletResponse response) throws IOException {
 
-        classroomService.generateExcelFile(response);
+        gradeService.generateExcelFile(response);
     }
    
 }

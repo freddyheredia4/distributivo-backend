@@ -9,5 +9,5 @@ public class GradeDTO {
     private long page;
     private long totalPages;
     private long capacity;
-    private List<GradeConsult> classrooms;
+    private List<GradeConsult> grades;
 }

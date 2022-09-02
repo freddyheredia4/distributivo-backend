@@ -418,10 +418,12 @@ ALTER SEQUENCE public.grade_id_seq OWNER TO postgres;
 -- DROP TABLE IF EXISTS public.grade CASCADE;
 CREATE TABLE public.grade (
 	id serial NOT NULL,
+	name character varying(100),
 	working_day integer,
 	level integer,
 	parallel integer,
 	status boolean DEFAULT true,
+	career integer,
 	CONSTRAINT grade_pk PRIMARY KEY (id)
 );
 -- ddl-end --
@@ -731,6 +733,13 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ALTER TABLE public.teacher_distributive DROP CONSTRAINT IF EXISTS grade_fk CASCADE;
 ALTER TABLE public.teacher_distributive ADD CONSTRAINT grade_fk FOREIGN KEY (grade)
 REFERENCES public.grade (id) MATCH SIMPLE
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: career_grade_fk | type: CONSTRAINT --
+-- ALTER TABLE public.grade DROP CONSTRAINT IF EXISTS career_grade_fk CASCADE;
+ALTER TABLE public.grade ADD CONSTRAINT career_grade_fk FOREIGN KEY (career)
+REFERENCES public.career (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 

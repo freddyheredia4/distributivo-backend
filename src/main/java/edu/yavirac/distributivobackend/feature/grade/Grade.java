@@ -12,10 +12,10 @@ public class Grade {
     @Id
     @Column("id") 
     private Long id;
-    private Long type;
-    private Long location;
     private String name;
-    private Long capacity;
-    private String description;
+    private Long workingDay;
+    private Long level;
+    private Long parallel;
+    private Long career;
     private boolean status =  true;
 }

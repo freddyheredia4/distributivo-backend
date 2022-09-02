@@ -11,15 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface GradeRepository extends CrudRepository<Grade, Long> {
 
-    final String DELETE = "UPDATE classrooms SET status=false WHERE id=:id";
-    final String SELECT_ALL = "SELECT classrooms.description, classrooms.id,classrooms.name, classrooms.status, classrooms.capacity,location.name as location_name,location.id as location, type.id as type,type.name as type_name FROM classrooms LEFT OUTER JOIN classroom_types type ON type.id = classrooms.type and type.status=true LEFT OUTER JOIN locations location ON location.id = classrooms.location and location.status=true WHERE classrooms.status = true LIMIT :limit offset :offset";
-    final String FIND_IGNORE_CASE = "SELECT * FROM classrooms WHERE name LIKE '%' || :name || '%'";
-    final String FIND = "SELECT * FROM classrooms WHERE id=:id";
-    final String COUNT = "SELECT COUNT(*) FROM classrooms WHERE status = true";
-    final String SAVE = "INSERT INTO classrooms (status,capacity,name,type,location,description) VALUES(:status,:capacity,:name,:type,:location,:description) RETURNING id";
-    final String UPDATE = "UPDATE public.classrooms SET type=:type, location=:location, name=:name, capacity=:capacity, status=true, description=:description WHERE id=:id RETURNING id ";
+    final String DELETE = "UPDATE grade SET status=false WHERE id=:id";
+    final String SELECT_ALL = "SELECT grade.id, grade.name,grade.level, grade.parallel, career.id as career, grade.working_day, career.name as career_name, grade.status FROM grade LEFT OUTER JOIN career ON career.id = grade.career and  career.status = true WHERE grade.status=true LIMIT :limit offset :offset";
+    final String FIND_IGNORE_CASE = "SELECT grade.id, grade.name,grade.level, grade.parallel, career.id as career, grade.working_day, career.name as career_name, grade.status FROM grade LEFT OUTER JOIN career ON career.id = grade.career and  career.status = true WHERE career.name LIKE '%' || :name || '%'";
+    final String FIND = "SELECT * FROM grade WHERE id=:id and status=true";
+    final String COUNT = "SELECT COUNT(*) FROM grade WHERE status = true";
+    final String SAVE = "INSERT INTO grade (name,working_day,level,parallel,career) VALUES(:name,:modality,:level,:parallel,:career) RETURNING id";
+   
+    final String UPDATE = "UPDATE public.grade SET name=:name, working_day=:modality, level=:level, parallel=:parallel, career=:career WHERE id=:id RETURNING id ";
+
     @Query(value = SELECT_ALL)
-    List<GradeConsult> findAll(@Param("limit") long limit, @Param("offset") long offset );
+    List<GradeConsult> findAll(@Param("limit") long limit, @Param("offset") long offset);
 
     @Query(value = FIND_IGNORE_CASE)
     List<Grade> findByNameLikeIgnoreCase(@Param("name") String term);
@@ -28,21 +30,21 @@ public interface GradeRepository extends CrudRepository<Grade, Long> {
     Optional<Grade> findById(@Param("id") Long id);
 
     @Query(value = UPDATE)
-    Long update(@Param("id") long id,@Param("name") String name,@Param("capacity") Long 
-    capacity,@Param("type") Long type,@Param("location") Long location,
-    @Param("description") String description );
+    Long update(@Param("id") long id, @Param("name") String name, @Param("modality") 
+    Long modality, @Param("level") Long level, 
+    @Param("parallel") Long parallel, @Param("career") Long career);
 
     @Query(value = DELETE)
     @Modifying()
     @Transactional()
-    void deleteclassroom(@Param("id") Long id);
+    void deleteGrade(@Param("id") Long id);
 
     @Query(value = COUNT)
     long count();
 
     @Query(value = SAVE)
-    Long mySave(@Param("name") String name, @Param("status") boolean status,@Param("capacity") Long 
-    capacity,@Param("type") Long type,@Param("location") Long location,
-    @Param("description") String description );
-        
+    Long mySave( @Param("name") String name, @Param("modality")
+    Long modality,  @Param("level") Long level, 
+    @Param("parallel") Long parallel, @Param("career") Long career);
+
 }
