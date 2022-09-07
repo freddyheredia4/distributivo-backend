@@ -19,7 +19,6 @@ public class ClassRoomController {
 
     @PostMapping()
     public Classroom save(@RequestBody Classroom classroom){
-        System.out.println("ClassRoomController.update()\n"+ classroom);
         return classroomService.save(classroom);
     }
 
@@ -29,12 +28,18 @@ public class ClassRoomController {
     }
 
     @GetMapping()
-    public ClassroomDTO findAll(
+    public ClassroomDTO findAllConsult(
         @RequestParam(value="count", defaultValue = "20", required = false) long capacity,
         @RequestParam(value = "page", defaultValue = "0", required = true) long page
     ){
        
-        return classroomService.findAll(capacity, page);
+        return classroomService.findAllConsult(capacity, page);
+    }
+
+    @GetMapping("/findAll")
+    public List<Classroom> findAll(){
+       
+        return classroomService.findAll();
     }
     
     @PostMapping("/update")

@@ -10,7 +10,7 @@ GET {{url}}/2
 Authorization:{{tokeen}}
 
 ###
-GET {{url}}/find/asa
+GET {{url}}/find/lol
 Authorization:{{tokeen}}
 
 ###
@@ -47,4 +47,12 @@ Authorization:{{tokeen}}
 
 ###
 GET {{url}}/export-to-excel
+Authorization:{{tokeen}}
+
+###
+GET {{url}}/careers
+Authorization:{{tokeen}}
+
+###
+GET {{url}}/findAll
 Authorization:{{tokeen}}

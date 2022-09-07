@@ -36,3 +36,7 @@ Authorization:{{tokeen}}
 ###
 GET {{url}}/export-to-excel
 Authorization:{{tokeen}}
+
+###
+GET {{url}}/findAll
+Authorization:{{tokeen}}

@@ -20,18 +20,22 @@ public class ClassRoomService {
     @Autowired
     ClassRoomRepository classroomRepository;
 
-    public ClassroomDTO findAll(long capacity, long page) {
+    public ClassroomDTO findAllConsult(long capacity, long page) {
 
         long offset = page <= 0 ? 0 : page * capacity;
 
         ClassroomDTO dto = new ClassroomDTO();
-        dto.setClassrooms(classroomRepository.findAll(capacity, offset));
+        dto.setClassrooms(classroomRepository.findAllConsult(capacity, offset));
         dto.setTotal(classroomRepository.count());
         dto.setTotalPages(dto.getTotal() / capacity + 1);
         dto.setCapacity(capacity);
         dto.setPage(page);
         return dto;
 
+    }
+
+    public List<Classroom> findAll(){
+        return classroomRepository.finAll();
     }
 
     public Classroom save(Classroom classroom) {

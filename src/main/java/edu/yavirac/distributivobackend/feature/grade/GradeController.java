@@ -18,7 +18,6 @@ public class GradeController {
 
     @PostMapping()
     public Grade save(@RequestBody Grade grade){
-        System.out.println("gradeController.update()\n"+ grade);
         return gradeService.save(grade);
     }
 
@@ -28,13 +27,13 @@ public class GradeController {
     }
     
     @GetMapping()
-    public GradeDTO findAllByCareer(
+    public List<GradeForCareer> findAllByCareer(
     ){
        
         return gradeService.findAllByCareer();
     }
 
-    @GetMapping()
+   /* @GetMapping()
     public GradeDTO findAll(
         @RequestParam(value="count", defaultValue = "20", required = false) long capacity,
         @RequestParam(value = "page", defaultValue = "0", required = true) long page
@@ -42,7 +41,7 @@ public class GradeController {
        
         return gradeService.findAll(capacity, page);
     }
-    
+    */
     @PostMapping("/update")
     public Grade update(@RequestBody Grade grade)
     {
@@ -57,8 +56,8 @@ public class GradeController {
     }
 
     @GetMapping("/find/{name}")
-    public List<Grade> findByName(@PathVariable String name){
-        return gradeService.findByName(name);
+    public List<GradeForCareer> findByName(@PathVariable String name){
+        return gradeService.findByNameForCareer(name);
     }
     @PostMapping(value = "/import-excel")
     public List<Grade> importExcelFile(@RequestParam("file") MultipartFile files) throws IOException {
@@ -71,5 +70,16 @@ public class GradeController {
 
         gradeService.generateExcelFile(response);
     }
+
+    @GetMapping("/findAll")
+    public List<Grade> findAll(){
+        return gradeService.findAll();
+    }
+
+    @GetMapping("/careers")
+    public List<Career> getCareers(){
+        return gradeService.getCareers();
+    }
+    
    
 }

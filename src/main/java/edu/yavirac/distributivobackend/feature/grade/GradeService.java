@@ -19,8 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class GradeService {
     @Autowired
     GradeRepository gradeRepository;
+    
+    //services
 
-    public GradeDTO findAll(long capacity, long page) {
+    public GradeDTO findAllConsult(long capacity, long page) {
 
         long offset = page <= 0 ? 0 : page * capacity;
 
@@ -33,10 +35,17 @@ public class GradeService {
         return dto;
 
     }
-    
-    public List<GradeForCareer>  findAllByCareer(){
 
+    public List<GradeForCareer> findAllByCareer() {
 
+        List<Grade> grades = gradeRepository.getAll();
+
+        return separarteByCareer(grades);
+
+    }
+
+    public List<Grade> findAll(){
+        return gradeRepository.getAll();
     }
 
     public Grade save(Grade grade) {
@@ -58,8 +67,8 @@ public class GradeService {
         gradeRepository.deleteGrade(id);
     }
 
-    public List<Grade> findByName(String name) {
-        return gradeRepository.findByNameLikeIgnoreCase(name + "%");
+    public List<GradeForCareer> findByNameForCareer(String name) {
+        return separarteByCareer(gradeRepository.findByNameLikeIgnoreCase(name + "%"));
     }
 
     public void generateExcelFile(HttpServletResponse response) throws IOException {
@@ -104,17 +113,49 @@ public class GradeService {
         return gradeList;
     }
 
+    public List<Career> getCareers() {
+        return gradeRepository.getCareers();
+    }
+
+    //functions to services
+
+    private List<GradeForCareer> separarteByCareer(List<Grade> grades) {
+        List<GradeForCareer> gradesForCareer = new ArrayList<GradeForCareer>();
+        List<Career> careers = gradeRepository.getCareers();
+
+        for (Career career : careers) {
+            GradeForCareer gradeForCareer = new GradeForCareer();
+
+            gradeForCareer.setName(career.getName());
+
+            List<Grade> gradesByCareer = new ArrayList<Grade>();
+
+            grades.stream().filter(g -> g.getCareer() == career.getId()).forEach(g -> gradesByCareer.add(g));
+
+            gradeForCareer.setGrades(gradesByCareer);
+            if (gradeForCareer.getGrades().size() == 0)
+                continue;
+            gradesForCareer.add(gradeForCareer);
+
+        }
+
+        return gradesForCareer;
+
+    }
+
     private Grade executeSave(Grade g) {
         return gradeRepository.findById(
-                gradeRepository.mySave(g.getName(), g.getWorkingDay(), g.getLevel(),g.getParallel(), g.getCareer())).get();
+                gradeRepository.mySave(g.getName(), g.getWorkingDay(), g.getLevel(), g.getParallel(), g.getCareer()))
+                .get();
 
     }
 
     private Grade executeUpdate(Grade g) {
         return gradeRepository.findById(
                 gradeRepository.update(
-                        g.getId(), g.getName(), g.getWorkingDay(),g.getLevel(), g.getParallel(), g.getCareer()))
+                        g.getId(), g.getName(), g.getWorkingDay(), g.getLevel(), g.getParallel(), g.getCareer()))
                 .get();
 
     }
+
 }
