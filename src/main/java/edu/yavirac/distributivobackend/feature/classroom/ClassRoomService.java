@@ -88,8 +88,11 @@ public class ClassRoomService {
                     if(row.getCell(1) != null) classroom.setDescription(row.getCell(1).getStringCellValue());
                     if(row.getCell(2) != null)  classroom.setLocation(Math.round(row.getCell(2).getNumericCellValue()));
                     if(row.getCell(3) != null) classroom.setCapacity(Math.round(row.getCell(3).getNumericCellValue()));
-                    if(row.getCell(4) != null) classroom.setType(Math.round(row.getCell(4).getNumericCellValue()));
- 
+                    if(row.getCell(4) != null){ 
+                       
+                       if(row.getCell(4).getNumericCellValue() > 0) classroom.setType(Math.round(row.getCell(4).getNumericCellValue()));
+                     
+                    };
                     classroomList.add(this.executeSave(classroom));
 
                 }
