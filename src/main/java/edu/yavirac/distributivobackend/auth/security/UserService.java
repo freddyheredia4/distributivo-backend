@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -19,8 +20,15 @@ public class UserService implements UserDetailsService {
     @Autowired
     RoleService roleService;
 
+
+ 
     //Create and update
     public User save(User entity){
+        SecurityConfiguration securityConfiguration = new SecurityConfiguration();
+        BCryptPasswordEncoder encoder = securityConfiguration.bCryptPasswordEncoder();
+
+        entity.setPassword(encoder.encode(entity.getPassword()));
+
         return userRepository.save(entity);
     }
 
@@ -37,6 +45,27 @@ public class UserService implements UserDetailsService {
     public List<User> findAll(){
         return userRepository.findAll();
     }
+
+    public List<User> findByName(String name){
+        return userRepository.findByNameLikeIgnoreCase(name + '%');
+
+    }
+
+    public UserDTO findAllPageable(long capacity, long page) {
+
+        long offset = page <= 0 ? 0 : page * capacity;
+
+        UserDTO dto = new UserDTO();
+        dto.setUsers(userRepository.findAllPageable(capacity, offset));
+        dto.setTotal(userRepository.count());
+        dto.setTotalPages(dto.getTotal() / capacity + 1);
+        dto.setCapacity(capacity);
+        dto.setPage(page);
+
+        return dto;
+
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

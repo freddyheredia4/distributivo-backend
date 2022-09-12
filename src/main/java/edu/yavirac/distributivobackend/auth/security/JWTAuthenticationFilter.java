@@ -46,6 +46,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             byte[] decodedBytes = Base64.getDecoder().decode(header);
             header = new String(decodedBytes);
+            System.out.println(header);
 
             String[] credenciales = header.split(":");
             if (credenciales.length <= 1)
