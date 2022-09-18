@@ -3,6 +3,7 @@ package edu.yavirac.distributivobackend.auth.security;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import edu.yavirac.distributivobackend.feature.user.User;
 
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -46,7 +47,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             byte[] decodedBytes = Base64.getDecoder().decode(header);
             header = new String(decodedBytes);
-            System.out.println(header);
 
             String[] credenciales = header.split(":");
             if (credenciales.length <= 1)

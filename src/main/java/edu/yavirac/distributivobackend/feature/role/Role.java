@@ -1,4 +1,4 @@
-package edu.yavirac.distributivobackend.auth.security;
+package edu.yavirac.distributivobackend.feature.role;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
+import edu.yavirac.distributivobackend.auth.security.RoleAuthority;
 import lombok.Data;
 
 @Data
@@ -19,7 +20,7 @@ public class Role {
     private long roleId;
 
     private String name;
-    private boolean enabled;
+    //private boolean enabled;
 
     @MappedCollection(idColumn = "role_id")
     private Set<RoleAuthority> authorities = new HashSet<>();

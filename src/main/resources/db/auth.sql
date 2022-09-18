@@ -343,14 +343,15 @@ ALTER TABLE ONLY auth.roles_authorities
     ADD CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES auth.roles(role_id);
 
 
+
 --
 -- TOC entry 3206 (class 2606 OID 16570)
 -- Name: users_roles fk_role; Type: FK CONSTRAINT; Schema: auth; Owner: postgres
 --
 
-ALTER TABLE ONLY auth.users_roles
-    ADD CONSTRAINT fk_role FOREIGN KEY (user_role_id) REFERENCES auth.roles(role_id);
 
+ALTER TABLE ONLY auth.users_roles 
+    ADD CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES auth.roles(role_id);
 
 --
 -- TOC entry 3205 (class 2606 OID 16565)

@@ -18,12 +18,31 @@ Authorization: {{tokeen}}
 Content-Type: application/json
 
 ###
-POST {{url}}
+POST {{url}}/update
 Authorization: {{tokeen}}
 Content-Type: application/json
 
 {
-    "name" : "Ander123",
-    "password" : "holaa",
-    "username" : "anderk222"
-}
+      "id": 6,
+      "password": "$2a$10$rl6ADMFsI3PQSb..EInxpuIjD8zg3EE4zETIa1XBmAdUt10sEsR1m",
+      "name": "Joel Manzaba",
+      "username": "joelsdk",
+      "looked": false,
+      "expired": false,
+      "enabled": true,
+      "roles": [
+        {
+            "userId" : 6,
+            "roleId" : 1
+        }
+      ],
+      "authorities": null,
+      "accountNonExpired": true,
+      "accountNonLocked": true,
+      "credentialsNonExpired": true
+    }
+
+###
+GET {{url}}/export-to-excel
+Authorization: {{tokeen}}
+Content-Type: application/json
