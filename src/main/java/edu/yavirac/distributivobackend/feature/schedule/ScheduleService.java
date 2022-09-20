@@ -2,6 +2,7 @@ package edu.yavirac.distributivobackend.feature.schedule;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,10 +26,10 @@ public class ScheduleService {
     public Schedule findEventsSchedule(ScheduleOptionsConsultDto options){
         List<ScheduleConsult> scheduleConsults = ScheduleRespository.findAllFilteredEvents(options);
         List<HourEntity> hoursDatabase = scheduleRespository.findHours();
-        
+         
         Schedule schedule = new Schedule();
-        schedule.setFrom(Integer.parseInt(options.getFrom().split("-")[2]));
-        schedule.setTo(Integer.parseInt(options.getTo().split("-")[2]));
+
+        schedule.setToFrom(generateDaysArray(options.getFrom(), options.getTo()));
 
         List<Hour> hours = new ArrayList<>();
         hoursDatabase.forEach((hourDatabase)->{
@@ -46,8 +47,6 @@ public class ScheduleService {
 
         return schedule;
 
-    
-    
     };
 
     
@@ -119,7 +118,6 @@ public class ScheduleService {
         addValuetoMap("parallel", dataValuesMap,row.getCell(9));
         addValuetoMap("journalist", dataValuesMap,row.getCell(10));
        TimeConfiguration timeConfiguration = generateTimeConf(dataValuesMap);
-       System.out.println(dataValuesMap);
        if(timeConfiguration != null)  scheduleRespository.save(timeConfiguration);
       
         
@@ -137,15 +135,11 @@ public class ScheduleService {
 
         TimeConfiguration timeConfiguration = new TimeConfiguration();
         
-        System.out.println(map);
-        System.out.println(day);
-        System.out.println(grade);
 
         ConsultIds idDis = scheduleRespository
         .getIdDisByParameters(map
         .get("teacher"), map.get("period"), map.get("subject"), grade, map
         .get("hour"), map.get("classroom"), day);
-        System.out.println(idDis);
          
 
         timeConfiguration.setClassroom(idDis.getClassroom());
@@ -170,5 +164,27 @@ public class ScheduleService {
         }
 
     }
+
+    private List<Integer> generateDaysArray(String from, String to){
+        String[] dateArray = from.split("-");
+
+        LocalDate date = LocalDate.of(Integer
+        .valueOf(dateArray[0]), Integer.valueOf(dateArray[1]), Integer.valueOf(dateArray[2]));
+
+        List<Integer> days = new ArrayList<Integer>();
+        days.add(date.getDayOfMonth());
+
+        do
+        {
+         date = date.plusDays(1);
+         if(date.toString().equalsIgnoreCase(to)) continue;
+         days.add(date.getDayOfMonth());
+        }
+        while(!(date.toString().equalsIgnoreCase(to)));
+        
+   
+       return days; 
+    }
+    
     
 }
