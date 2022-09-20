@@ -2,7 +2,7 @@
 @type = application/json
 @url = http://localhost:8080/api/schedule
 ###
-GET {{url}}?teacher=4&grade=6&room=3&period
+GET {{url}}?teacher=4&grade=6&room=3&td=2002-09-19&fd=2002-09-23
 Authorization:{{tokeen}}
 
 ###
