@@ -18,6 +18,10 @@ import edu.yavirac.distributivobackend.feature.user.UserService;
 public class JWTAuthorizationFilter  extends BasicAuthenticationFilter {
 
     private UserService userService;
+    /**
+     * @param authenticationManager
+     * @param userService
+     */
     public JWTAuthorizationFilter(AuthenticationManager authenticationManager, UserService userService) {
         super(authenticationManager);
         this.userService = userService;

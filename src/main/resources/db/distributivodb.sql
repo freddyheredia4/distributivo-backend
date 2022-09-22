@@ -189,6 +189,7 @@ CREATE TABLE public.subject (
 	theoretical_hours integer,
 	laboratory_hours integer,
 	career integer,
+	status boolean,
 	CONSTRAINT "Asignatura_pk" PRIMARY KEY (id)
 );
 -- ddl-end --
@@ -296,18 +297,6 @@ CREATE SEQUENCE public.color_id_seq
 
 -- ddl-end --
 ALTER SEQUENCE public.color_id_seq OWNER TO postgres;
--- ddl-end --
-
--- object: public.color | type: TABLE --
--- DROP TABLE IF EXISTS public.color CASCADE;
-CREATE TABLE public.color (
-	id serial NOT NULL,
-	name character varying(50),
-	code character varying(20),
-	CONSTRAINT color_pk PRIMARY KEY (id)
-);
--- ddl-end --
-ALTER TABLE public.color OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.configuracion_horario_id_seq | type: SEQUENCE --
@@ -598,7 +587,7 @@ ALTER SEQUENCE public.tabla_horas_id_seq OWNER TO postgres;
 -- DROP TABLE IF EXISTS public.hours_table CASCADE;
 CREATE TABLE public.hours_table (
 	id serial NOT NULL,
-	hour character varying(10),
+	hour character varying(15),
 	time_position integer,
 	CONSTRAINT tabla_horas_pk PRIMARY KEY (id)
 );
@@ -630,12 +619,25 @@ CREATE TABLE public.teacher (
 	color character varying(100),
 	phone character varying(10),
 	email character varying(100),
-	estado boolean,
 	archived boolean DEFAULT false,
+	lastname character varying(100),
 	CONSTRAINT teacher_pkey PRIMARY KEY (id)
 );
 -- ddl-end --
 ALTER TABLE public.teacher OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.catalogue | type: TABLE --
+-- DROP TABLE IF EXISTS public.catalogue CASCADE;
+CREATE TABLE public.catalogue (
+	id serial NOT NULL,
+	name character varying(50),
+	value character varying(50),
+	status boolean,
+	CONSTRAINT catalogue_pk PRIMARY KEY (id)
+);
+-- ddl-end --
+ALTER TABLE public.catalogue OWNER TO postgres;
 -- ddl-end --
 
 -- object: fk_auth | type: CONSTRAINT --
@@ -708,6 +710,13 @@ REFERENCES public.school_period (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
+-- object: "teacher_distributive-config_schedule-fk" | type: CONSTRAINT --
+-- ALTER TABLE public.time_configuration DROP CONSTRAINT IF EXISTS "teacher_distributive-config_schedule-fk" CASCADE;
+ALTER TABLE public.time_configuration ADD CONSTRAINT "teacher_distributive-config_schedule-fk" FOREIGN KEY (occupied_by)
+REFERENCES public.teacher_distributive (id) MATCH SIMPLE
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
 -- object: asignatura_fk | type: CONSTRAINT --
 -- ALTER TABLE public.teacher_distributive DROP CONSTRAINT IF EXISTS asignatura_fk CASCADE;
 ALTER TABLE public.teacher_distributive ADD CONSTRAINT asignatura_fk FOREIGN KEY (course)
@@ -740,6 +749,27 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ALTER TABLE public.grade DROP CONSTRAINT IF EXISTS career_grade_fk CASCADE;
 ALTER TABLE public.grade ADD CONSTRAINT career_grade_fk FOREIGN KEY (career)
 REFERENCES public.career (id) MATCH SIMPLE
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: fk_level_catalogue | type: CONSTRAINT --
+-- ALTER TABLE public.grade DROP CONSTRAINT IF EXISTS fk_level_catalogue CASCADE;
+ALTER TABLE public.grade ADD CONSTRAINT fk_level_catalogue FOREIGN KEY (level)
+REFERENCES public.catalogue (id) MATCH SIMPLE
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: working_day_catalogue_fk | type: CONSTRAINT --
+-- ALTER TABLE public.grade DROP CONSTRAINT IF EXISTS working_day_catalogue_fk CASCADE;
+ALTER TABLE public.grade ADD CONSTRAINT working_day_catalogue_fk FOREIGN KEY (working_day)
+REFERENCES public.catalogue (id) MATCH SIMPLE
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+-- ddl-end --
+
+-- object: paralell_catalogue_fk | type: CONSTRAINT --
+-- ALTER TABLE public.grade DROP CONSTRAINT IF EXISTS paralell_catalogue_fk CASCADE;
+ALTER TABLE public.grade ADD CONSTRAINT paralell_catalogue_fk FOREIGN KEY (parallel)
+REFERENCES public.catalogue (id) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
@@ -783,4 +813,88 @@ GRANT CREATE,USAGE
    TO PUBLIC;
 -- ddl-end --
 
+INSERT INTO public.career( name, duration, img, status)
+	VALUES ('Desarrollo de Software', 5, 'lol', true);
+INSERT INTO public.career( name, duration, img, status)
+	VALUES ('Diseno grafico', 5, 
+			'http://bp2.blogger.com/_K7CNWmzoBDE/RhAz0jEShrI/AAAAAAAABEs/wgKkKHyBWC4/w1200-h630-p-k-no-nu/normal_BonIce1.jpg',
+			true
+		   );
+INSERT INTO public.career( name, duration, img, status)
+	VALUES ('Diseno de modas', 5, 
+			'https://mott.pe/noticias/wp-content/uploads/2017/12/aplicaciones-para-disenar-ropa-que-todo-disenador-de-moda-debe-tener-1.png',
+			true
+		   );
 
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'level','1ro' , true);
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'level','2do' , true);
+INSERT INTO public.catalogue(
+	name, value, status)
+	VALUES ( 'level','3ro' , true);
+	INSERT INTO public.catalogue(
+	name, value, status)
+	VALUES ( 'level','4to' , true);
+INSERT INTO public.catalogue(
+	name, value, status)
+	VALUES ( 'level','5to' , true);
+	
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'paralell','A' , true);
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'paralell','B' , true);
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'paralell','C' , true);
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'paralell','D' , true);
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'working_day','Vespertina' , true);
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'working_day','Matutina' , true);
+INSERT INTO public.catalogue(
+	 name, value, status)
+	VALUES ( 'working_day','Diurna' , true);
+	INSERT INTO public.school_period(
+	 name, start_date, end_date, status)
+	VALUES ('2019-2019', '2019-01-01', '2019-06-30', true);
+	
+INSERT INTO public.school_period(
+	 name, start_date, end_date, status)
+	VALUES ('2021-2021', '2021-04-01', '2021-09-30', true);
+INSERT INTO public.school_period(
+	 name, start_date, end_date, status)
+	VALUES ('2021-2022', '2021-11-01', '2022-04-30', true);
+
+INSERT INTO public.school_period(
+	 name, start_date, end_date, status)
+	VALUES ('2022-2022', '2022-06-01', '2022-11-30', true);
+
+
+	INSERT INTO public.teacher(
+	dni, name, color, phone, email, archived)
+	VALUES ('2101165609', 'Anderson Roberto','rgb(248 113 113)',
+			'0959125365', 'anderk222@gmail.com',true);
+			
+
+INSERT INTO public.teacher(
+	dni, name, color, phone, email,  archived)
+	VALUES ('2101365609', 'Aguinaldo Socio','rgb(251 146 60)',
+			'0959145365', 'sosos@gmail.com', true);
+INSERT INTO public.teacher(
+	dni, name, color, phone, email,  archived)
+	VALUES ('2101365109', 'Jomaria Aguinaldo','rgb(74 222 128)',
+			'0959141365', 'aguinaldo@gmail.com', true);
+			
+INSERT INTO public.teacher(
+	dni, name, color, phone, email, archived)
+	VALUES ('2341365109', 'Jhosuan Samuca','rgb(167 139 250)',
+			'0929131365', 'elsamucaobv@gmail.com',true);

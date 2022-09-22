@@ -97,6 +97,7 @@ public interface ScheduleRespository extends CrudRepository<TimeConfiguration, L
                 scheduleConsults.add(scheduleConsult);
 
             }
+            connection.close();
         } catch (SQLException err) {
             throw new Error(err);
         }

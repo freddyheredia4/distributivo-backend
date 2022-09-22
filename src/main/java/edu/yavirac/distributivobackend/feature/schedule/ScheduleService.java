@@ -3,7 +3,6 @@ package edu.yavirac.distributivobackend.feature.schedule;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,20 +82,12 @@ public class ScheduleService {
         try (XSSFWorkbook workbook = new XSSFWorkbook(files.getInputStream())) {
             XSSFSheet worksheet = workbook.getSheetAt(0);
      
-            LocalDateTime localDateTime = LocalDateTime.of(2021, 12, 31, 0, 0);
             
-            localDateTime = localDateTime.plusDays(365);
             for (int index = 2; index < worksheet.getPhysicalNumberOfRows(); index++) {
               
-                    
-                    
-                    
                     XSSFRow row = worksheet.getRow(index);
                     if(row == null) break;
                     saveColumn(row);
-                    
-                   
-
                     
             }
            
@@ -165,23 +156,35 @@ public class ScheduleService {
 
     }
 
-    private List<Integer> generateDaysArray(String from, String to){
-        String[] dateArray = from.split("-");
+    private List<String> generateDaysArray(String from, String to){
+       
+        String[] fromArray = from.split("-");
+        String[] toArray = to.split("-");
 
-        LocalDate date = LocalDate.of(Integer
-        .valueOf(dateArray[0]), Integer.valueOf(dateArray[1]), Integer.valueOf(dateArray[2]));
+        LocalDate fromDate = LocalDate.of(Integer
+        .valueOf(fromArray[0]),Integer.valueOf(fromArray[1]),Integer.valueOf(fromArray[2]));
+        LocalDate toDate = LocalDate.of(Integer
+        .valueOf(toArray[0]),Integer.valueOf(toArray[1]),Integer.valueOf(toArray[2]));
+        List<String> days = new ArrayList<String>();
 
-        List<Integer> days = new ArrayList<Integer>();
-        days.add(date.getDayOfMonth());
+        if(fromDate.isAfter(toDate)) 
+        throw new Error("la fecha de inicio es mayor a la fecha final");
+        
+        days.add(fromDate.toString());
+        
 
         do
         {
-         date = date.plusDays(1);
-         if(date.toString().equalsIgnoreCase(to)) continue;
-         days.add(date.getDayOfMonth());
+            fromDate = fromDate.plusDays(1);
+     
+         if(fromDate.isEqual(toDate)) continue;
+         
+
+            days.add(fromDate.toString());
+            //if(days.size() <= 6)     
+       
         }
-        while(!(date.toString().equalsIgnoreCase(to)));
-        
+        while(!fromDate.isEqual(toDate));
    
        return days; 
     }

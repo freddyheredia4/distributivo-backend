@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class Schedule {
-    private List<Integer> toFrom = new ArrayList<Integer>();
+    private List<String> toFrom = new ArrayList<String>();
     private String month;
     private List<Hour> hours;
 }
