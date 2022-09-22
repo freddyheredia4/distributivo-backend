@@ -31,11 +31,6 @@ public class ScheduleService {
     public TimeConfiguration save(SaveEventDTO event){
         
         String day = event.getDate().getDayOfWeek().toString();
-        System.out.println(day);
-        System.out.println("---------------------");
-        System.out.println(event.getDate().toString());
-        System.out.println(day);
-        System.out.println(event.getHour());
         HourAndDay hourAndDay = scheduleRespository.selectIdHourAndDay(event.getHour(), day);
         TimeConfiguration timeConfiguration = new TimeConfiguration();
         timeConfiguration.setClassroom(event.getClassroom());
