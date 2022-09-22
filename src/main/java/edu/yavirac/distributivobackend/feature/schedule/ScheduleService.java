@@ -21,6 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class ScheduleService {
     @Autowired
     private ScheduleRespository scheduleRespository;
+    @Autowired
+    private TimeConfigurationRepository timeConfigurationRepository;
+
+    public void deleteEvent(Long id){
+        timeConfigurationRepository.deleteById(id);
+    }
 
     public Schedule findEventsSchedule(ScheduleOptionsConsultDto options){
         List<ScheduleConsult> scheduleConsults = ScheduleRespository.findAllFilteredEvents(options);
@@ -59,6 +65,7 @@ public class ScheduleService {
                 currentEvent.setHour(eventConsult.getHour());
                 currentEvent.setSubject(eventConsult.getSubject());
                 currentEvent.setGrade(eventConsult.getGrade());
+                currentEvent.setId(eventConsult.getId());
                 
                 Teacher teacherEvent = new Teacher();
                 teacherEvent.setName(eventConsult.getTeacher());
@@ -108,7 +115,6 @@ public class ScheduleService {
         addValuetoMap("level", dataValuesMap,row.getCell(8));
         addValuetoMap("parallel", dataValuesMap,row.getCell(9));
         addValuetoMap("journalist", dataValuesMap,row.getCell(10));
-        System.out.println(dataValuesMap);
        TimeConfiguration timeConfiguration = generateTimeConf(dataValuesMap);
        
        if(timeConfiguration != null)  scheduleRespository.save(timeConfiguration);
