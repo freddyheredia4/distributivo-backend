@@ -1,4 +1,4 @@
-package edu.yavirac.distributivobackend.feature.teacher;
+package edu.yavirac.distributivobackend.feature.subject;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -7,21 +7,21 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
+
 import lombok.Data;
 
 @Data
-@Table("teacher")
-public class Teacher {
+@Table("subject")
+public class Subject {
     @Id
     @Column("id")
     private long id;
-    private String dni;
+    private String code;
     private String name;
-    private String lastname;
-    private String color;
-    private String email;
-    private Boolean archived;
+    @Column("theoretical_hours")
+    private String theoreticalHours;
+    @Column("laboratory_hours")
+    private String laboratoryHours;
+    private Number career;
 
-    @MappedCollection(idColumn = "id")
-    private Set<TeacherDistributive> teacherDistributives = new HashSet<>();
 }

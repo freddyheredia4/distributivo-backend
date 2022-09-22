@@ -63,3 +63,22 @@ FOREIGN KEY(type) REFERENCES classroom_types(id);
 ALTER TABLE means_classrom ADD CONSTRAINT
 fk_mean_classroom
 FOREIGN KEY(classroom) REFERENCES classrooms(id);
+
+/*SELECT t.dni, t.name, s."name", a."name",g.name, g.working_day ,g.level, g.parallel FROM teacher_distributive d join school_period s on d.school_time = s.id
+join teacher t on d.teacher = t.id
+join subject a on d.course = a.id
+join grade g on d.grade = g.id
+
+--------
+select te.dni,te."name", te.lastname, 
+su.code, su."name", su.laboratory_hours, su.theoretical_hours, 
+gr."name",
+sp."name", sp.start_date, sp.end_date
+from teacher_distributive td
+join teacher te on te.id = td.teacher
+join grade gr on td.grade = gr.id
+join subject su on td.course = su.id
+join school_period sp on td.school_time = sp.id
+
+
+*/

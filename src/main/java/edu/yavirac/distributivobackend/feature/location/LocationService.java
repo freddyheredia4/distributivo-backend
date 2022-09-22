@@ -83,7 +83,7 @@ public class LocationService {
                     location.setDescription(row.getCell(2).getStringCellValue());
 
                     locationList.add(locationRepository.save(location));
-                    
+                     
                 }
             }
         }
