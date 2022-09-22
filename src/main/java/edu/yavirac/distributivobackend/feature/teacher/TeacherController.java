@@ -1,19 +1,20 @@
 package edu.yavirac.distributivobackend.feature.teacher;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -29,8 +30,8 @@ public class TeacherController {
     }
 
     @PostMapping("/save")
-    public Teacher save(@RequestBody Teacher docente){
-        return teacherService.save(docente);
+    public Teacher save(@RequestBody Teacher teacher){
+        return teacherService.save(teacher);
     }
 
     @GetMapping("/findById/{id}")
@@ -38,15 +39,18 @@ public class TeacherController {
         return teacherService.findById(id);
     }
 
-    @PutMapping("/update")
-    public Teacher update (@RequestBody Teacher teacher){
-        return teacherService.update(teacher);
+    @GetMapping("/findByName/{term}")
+    public List<Teacher> findByName( @PathVariable String term){
+        return teacherService.findByNameLikeIgnoreCase(term + "%");
     }
 
-    @DeleteMapping("/delete/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id){
-        teacherService.deleteById(id);
+    @PostMapping(value = "/import-excel")
+    public List<Teacher> importExcelFile(@RequestParam("file") MultipartFile files) throws IOException {
+        return teacherService.importExcel(files);
     }
     
+    @GetMapping("/export-to-excel")
+    public void exportIntoExcelFile(HttpServletResponse response) throws IOException {
+        teacherService.generateExcelFile(response);
+    }
 }

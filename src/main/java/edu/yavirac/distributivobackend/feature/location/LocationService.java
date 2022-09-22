@@ -88,7 +88,7 @@ public class LocationService {
                     location.setLongitude(Math.round(row.getCell(3).getNumericCellValue()));
 
                     locationList.add(locationRepository.save(location));
-                    
+                     
                 }
             }
         }

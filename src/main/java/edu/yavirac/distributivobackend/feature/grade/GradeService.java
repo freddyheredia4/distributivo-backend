@@ -25,7 +25,6 @@ public class GradeService {
     public GradeDTO findAllConsult(long capacity, long page) {
 
         long offset = page <= 0 ? 0 : page * capacity;
-
         GradeDTO dto = new GradeDTO();
         dto.setGrades(gradeRepository.findAll(capacity, offset));
         dto.setTotal(gradeRepository.count());

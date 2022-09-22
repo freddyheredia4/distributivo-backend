@@ -78,7 +78,7 @@ public interface ScheduleRespository extends CrudRepository<TimeConfiguration, L
 
             PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
             ResultSet resultSet = preparedStatement.executeQuery();
-
+System.out.println(query);
             while (resultSet.next()) {
                 ScheduleConsult scheduleConsult = new ScheduleConsult();
 

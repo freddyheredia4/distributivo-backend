@@ -22,6 +22,7 @@ public class ExcelGenerator {
         workbook = new XSSFWorkbook();
 
     }
+
     private void writeHeader(List<String> rows) {
         sheet = workbook.createSheet("Location");
         Row row = sheet.createRow(0);
@@ -36,6 +37,7 @@ public class ExcelGenerator {
         }
 
     }
+
     private void createCell(Row row, int columnCount, Object valueOfCell, CellStyle style) {
         sheet.autoSizeColumn(columnCount);
         Cell cell = row.createCell(columnCount);

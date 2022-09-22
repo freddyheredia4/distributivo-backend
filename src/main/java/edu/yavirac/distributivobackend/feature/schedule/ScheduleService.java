@@ -108,7 +108,9 @@ public class ScheduleService {
         addValuetoMap("level", dataValuesMap,row.getCell(8));
         addValuetoMap("parallel", dataValuesMap,row.getCell(9));
         addValuetoMap("journalist", dataValuesMap,row.getCell(10));
+        System.out.println(dataValuesMap);
        TimeConfiguration timeConfiguration = generateTimeConf(dataValuesMap);
+       
        if(timeConfiguration != null)  scheduleRespository.save(timeConfiguration);
       
         
