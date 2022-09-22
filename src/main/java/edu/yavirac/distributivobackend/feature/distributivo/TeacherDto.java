@@ -1,4 +1,4 @@
-package edu.yavirac.distributivobackend.dto;
+package edu.yavirac.distributivobackend.feature.distributivo;
 
 import java.sql.Date;
 
