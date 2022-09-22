@@ -1,4 +1,4 @@
-package edu.yavirac.distributivobackend.auth.security;
+package edu.yavirac.distributivobackend.feature.user;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,6 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import edu.yavirac.distributivobackend.feature.role.UserRole;
 import lombok.Data;
 
 @Data
@@ -29,7 +30,7 @@ public class User implements UserDetails{
     
     @MappedCollection(idColumn = "user_id")
     private Set<UserRole> roles = new HashSet<>();
-
+ 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
 

@@ -3,6 +3,7 @@ package edu.yavirac.distributivobackend.auth.security;
 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import edu.yavirac.distributivobackend.feature.user.User;
 
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;

@@ -1,4 +1,4 @@
-package edu.yavirac.distributivobackend.auth.security;
+package edu.yavirac.distributivobackend.feature.career;
 
 import java.util.List;
 
@@ -12,32 +12,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
+@RequestMapping("/api/career")
 @CrossOrigin({"*"})
-@RequestMapping("/api/role/")
-public class RoleController {
-    
+public class CarrerContoller {
     @Autowired
-    RoleService roleService;
+    CareerService careerService;
 
-    @PostMapping("save")
-    public Role save(@RequestBody Role role){
-        return roleService.save(role);
+    @GetMapping("/findAll")
+    public List<Career>findAll(){
+        return careerService.findAll();
+    }
+    @PostMapping("/save")
+    public Career save (@RequestBody Career career ){
+        return careerService.save(career);
+    }
+    @GetMapping("/findById/{id}")
+    public Career findById(@PathVariable long id){
+        return careerService.findById(id);
     }
 
-    @GetMapping("{id}")
-    public Role findById(@PathVariable long id){
-        return roleService.findById(id);
-    }
-
-    @DeleteMapping("deleteById{id}")
+    @DeleteMapping("/deleteById/{id}")
     public void deleteById(@PathVariable long id){
-        roleService.deleteById(id);
+        careerService.deleteById(id);
     }
 
-    @GetMapping("findAll")
-    public List<Role> findAll(){
-        return roleService.findAll();
-    }
+
+
+
 }
