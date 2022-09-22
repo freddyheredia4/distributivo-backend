@@ -21,6 +21,27 @@ import org.springframework.web.multipart.MultipartFile;
 public class ScheduleService {
     @Autowired
     private ScheduleRespository scheduleRespository;
+    @Autowired
+    private TimeConfigurationRepository timeConfigurationRepository;
+
+    public void deleteEvent(Long id){
+        timeConfigurationRepository.deleteById(id);
+    }
+    
+    public TimeConfiguration save(SaveEventDTO event){
+        
+        String day = event.getDate().getDayOfWeek().toString();
+        HourAndDay hourAndDay = scheduleRespository.selectIdHourAndDay(event.getHour(), day);
+        TimeConfiguration timeConfiguration = new TimeConfiguration();
+        timeConfiguration.setClassroom(event.getClassroom());
+        timeConfiguration.setDate(event.getDate());
+        timeConfiguration.setOccupiedBy(event.getOccupiedBy());
+        timeConfiguration.setSchoolPeriod(event.getSchoolPeriod());
+        timeConfiguration.setDay(hourAndDay.getDayId());
+        timeConfiguration.setHour(hourAndDay.getHourId());
+        return timeConfigurationRepository.save(timeConfiguration);
+
+    }
 
     public Schedule findEventsSchedule(ScheduleOptionsConsultDto options){
         List<ScheduleConsult> scheduleConsults = ScheduleRespository.findAllFilteredEvents(options);
@@ -59,6 +80,7 @@ public class ScheduleService {
                 currentEvent.setHour(eventConsult.getHour());
                 currentEvent.setSubject(eventConsult.getSubject());
                 currentEvent.setGrade(eventConsult.getGrade());
+                currentEvent.setId(eventConsult.getId());
                 
                 Teacher teacherEvent = new Teacher();
                 teacherEvent.setName(eventConsult.getTeacher());
@@ -108,7 +130,6 @@ public class ScheduleService {
         addValuetoMap("level", dataValuesMap,row.getCell(8));
         addValuetoMap("parallel", dataValuesMap,row.getCell(9));
         addValuetoMap("journalist", dataValuesMap,row.getCell(10));
-        System.out.println(dataValuesMap);
        TimeConfiguration timeConfiguration = generateTimeConf(dataValuesMap);
        
        if(timeConfiguration != null)  scheduleRespository.save(timeConfiguration);
@@ -136,7 +157,7 @@ public class ScheduleService {
          
 
         timeConfiguration.setClassroom(idDis.getClassroom());
-        timeConfiguration.setDate(Date.valueOf(map.get("date").replaceAll("/", "-")));
+        timeConfiguration.setDate(Date.valueOf(map.get("date").replaceAll("/", "-")).toLocalDate());
         
         timeConfiguration.setDay(idDis.getDay());
         timeConfiguration.setHour(idDis.getHour());

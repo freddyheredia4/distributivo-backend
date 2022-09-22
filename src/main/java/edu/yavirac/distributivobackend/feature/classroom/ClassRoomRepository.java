@@ -14,7 +14,7 @@ public interface ClassRoomRepository extends CrudRepository<Classroom, Long> {
     final String DELETE = "UPDATE classrooms SET status=false WHERE id=:id";
     final String FIND_ALL ="SELECT * FROM classrooms WHERE status=true";
     final String SELECT_ALL_CONSULT = "SELECT classrooms.description, classrooms.id,classrooms.name, classrooms.status, classrooms.capacity,location.name as location_name,location.id as location, type.id as type,type.name as type_name FROM classrooms LEFT OUTER JOIN classroom_types type ON type.id = classrooms.type and type.status=true LEFT OUTER JOIN locations location ON location.id = classrooms.location and location.status=true WHERE classrooms.status = true LIMIT :limit offset :offset";
-    final String FIND_IGNORE_CASE = "SELECT * FROM classrooms WHERE status=true and name LIKE '%' || :name || '%'";
+    final String FIND_IGNORE_CASE = "SELECT * FROM classrooms WHERE status=true and name ILIKE '%' || :name || '%'";
     final String FIND = "SELECT * FROM classrooms WHERE id=:id and status=true";
     final String COUNT = "SELECT COUNT(*) FROM classrooms WHERE status = true";
     final String SAVE = "INSERT INTO classrooms (status,capacity,name,type,location,description) VALUES(:status,:capacity,:name,:type,:location,:description) RETURNING id";
