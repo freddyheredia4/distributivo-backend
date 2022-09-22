@@ -27,6 +27,26 @@ public class ScheduleService {
     public void deleteEvent(Long id){
         timeConfigurationRepository.deleteById(id);
     }
+    
+    public TimeConfiguration save(SaveEventDTO event){
+        
+        String day = event.getDate().getDayOfWeek().toString();
+        System.out.println(day);
+        System.out.println("---------------------");
+        System.out.println(event.getDate().toString());
+        System.out.println(day);
+        System.out.println(event.getHour());
+        HourAndDay hourAndDay = scheduleRespository.selectIdHourAndDay(event.getHour(), day);
+        TimeConfiguration timeConfiguration = new TimeConfiguration();
+        timeConfiguration.setClassroom(event.getClassroom());
+        timeConfiguration.setDate(event.getDate());
+        timeConfiguration.setOccupiedBy(event.getOccupiedBy());
+        timeConfiguration.setSchoolPeriod(event.getSchoolPeriod());
+        timeConfiguration.setDay(hourAndDay.getDayId());
+        timeConfiguration.setHour(hourAndDay.getHourId());
+        return timeConfigurationRepository.save(timeConfiguration);
+
+    }
 
     public Schedule findEventsSchedule(ScheduleOptionsConsultDto options){
         List<ScheduleConsult> scheduleConsults = ScheduleRespository.findAllFilteredEvents(options);
@@ -142,7 +162,7 @@ public class ScheduleService {
          
 
         timeConfiguration.setClassroom(idDis.getClassroom());
-        timeConfiguration.setDate(Date.valueOf(map.get("date").replaceAll("/", "-")));
+        timeConfiguration.setDate(Date.valueOf(map.get("date").replaceAll("/", "-")).toLocalDate());
         
         timeConfiguration.setDay(idDis.getDay());
         timeConfiguration.setHour(idDis.getHour());

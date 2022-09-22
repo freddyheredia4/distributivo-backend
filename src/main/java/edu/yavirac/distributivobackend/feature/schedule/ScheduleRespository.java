@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -24,8 +23,8 @@ public interface ScheduleRespository extends CrudRepository<TimeConfiguration, L
     final String SELECT_ID_HOUR_AND_PERIOD = "SELECT dis.id, ht.id AS hour,d.id as day, periood.id AS period, cl.id AS classroom FROM teacher_distributive dis JOIN school_period periood ON periood.id= dis.school_time JOIN teacher ON teacher.id=dis.teacher JOIN subject ON subject.id = dis.course  JOIN grade ON grade.id = dis.grade JOIN day d ON d.name ilike :day JOIN classrooms cl ON cl.name ilike :classroom JOIN hours_table ht ON ht.hour = :hour WHERE teacher.name ilike :teacher AND periood.name = :period AND subject.name ILIKE :subject AND grade.name ILIKE :grade AND cl.name ilike :classroom AND ht.hour = :hour AND d.name ilike :day ";
     final String GET_SCHEDULE_EVENTS = "SELECT * FROM schedule";
     final String GET_HOURS = "SELECT * FROM hours_table";
-    final String GET_ID_DIS_TEACHER = "SELECT dis.id FROM teacher_distributive dis JOIN school_period periood ON periood.id= dis.school_time JOIN teacher ON teacher.id=dis.teacher JOIN subject ON subject.id = dis.course  JOIN grade ON grade.id = dis.grade WHERE teacher.name ilike :teacher AND periood.name = :period AND subject.name ILIKE :subject AND grade.name ILIKE : :grade";
-
+    final String GET_ID_DIS_TEACHER = "SELECT dis.id FROM teacher_distributive dis JOIN school_period periood ON periood.id= dis.school_time JOIN teacher ON teacher.id=dis.teacher JOIN subject ON subject.id = dis.course  JOIN grade ON grade.id = dis.grade WHERE teacher.name ilike :teacher AND periood.name = :period AND subject.name ILIKE :subject AND grade.name ILIKE :grade";
+    final String GET_HOUR_AND_DAY_ID = "SELECT h.id as hour_id, d.id as day_id FROM day d JOIN hours_table h ON h.hour = :hour WHERE d.name ilike :day AND h.hour=:hour";
     @Query(GET_SCHEDULE_EVENTS)
     List<ScheduleConsult> findScheduleEvents();
 
@@ -39,8 +38,9 @@ public interface ScheduleRespository extends CrudRepository<TimeConfiguration, L
     @Query(GET_HOURS)
     public List<HourEntity> findHours();
 
-    @Query(SELECT_ID_HOUR_AND_PERIOD)
-    public Map<String, Long> selectIdHourAndPeriod(@Param("hour") String hour,@Param("period") String period);
+    @Query(GET_HOUR_AND_DAY_ID)
+    public HourAndDay selectIdHourAndDay(@Param("hour") String hour,@Param("day") String day);
+    
 
     public static List<ScheduleConsult> findAllFilteredEvents(ScheduleOptionsConsultDto params) {
 
@@ -104,3 +104,5 @@ public interface ScheduleRespository extends CrudRepository<TimeConfiguration, L
     }
 
 }
+
+
