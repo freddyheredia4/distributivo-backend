@@ -11,7 +11,7 @@ public class Career {
     @Id
     private long id;
     private String name;
-    private String duration;
+    private Long duration;
     private String img;
     private boolean status;   
 }

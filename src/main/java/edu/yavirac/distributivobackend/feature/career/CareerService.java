@@ -25,5 +25,9 @@ public class CareerService {
     public void deleteById(long id){
         careerRepository.deleteById(id);
     } 
+
+    public List<Career>findByNameLikeIgnoreCase(String term){
+        return careerRepository.findByNameLikeIgnoreCase(term + "%");
+    }
     
 }

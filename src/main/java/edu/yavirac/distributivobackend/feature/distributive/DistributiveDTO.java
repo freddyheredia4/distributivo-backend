@@ -2,6 +2,7 @@ package edu.yavirac.distributivobackend.feature.distributive;
 
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import lombok.Data;
@@ -11,6 +12,7 @@ import lombok.Data;
 public class DistributiveDTO{
     @Id
     private long id;
+    @Column("teacher_cedula")
     private String teacherCedula;
     private String teacher;
     private String teacherApellido;

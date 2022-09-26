@@ -10,24 +10,26 @@ public class DistributiveService {
     @Autowired
     DistributiveRepository distributiveRepository;
 
-    public List<DistributiveDTO>findAll(){
+    public List<DistributiveDTO>findAllDistibutive(){
         return distributiveRepository.findAllDistibutive();
     }
 
-    public DistributiveDTO findById(long id){
-        return distributiveRepository.findByIdDto(id).orElse(new DistributiveDTO());
+    public DistributiveDTO findByTeacherId(long id){
+        return distributiveRepository.findByTeacherId(id).orElse(new DistributiveDTO());
     }
+    
 
-    public List<DistributiveDTO>findByTeacher(long id){
-        return distributiveRepository.findByTeacher(id);
+    public DistributiveDTO findByIdDistributive(long id){
+        return distributiveRepository.findByIdDistributive(id).orElse(new DistributiveDTO());
     }
-
+    
     public Distributive save(Distributive distributive){
         return distributiveRepository.save(distributive);
-
+        
     }
 
-    public List<DistributiveDTO>findByName(String dni){
-        return distributiveRepository.findByNameDni(dni);
+    public List<DistributiveDTO>findByTeacherLike(String name){
+        return distributiveRepository.findByTeacherLikeIgnoreCase(name +  "%");
     }
+
 }

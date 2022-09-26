@@ -37,7 +37,9 @@ public class CarrerContoller {
         careerService.deleteById(id);
     }
 
-
-
+    @GetMapping("/findByName/{term}")
+    public List<Career>findByName( @PathVariable String term){
+        return careerService.findByNameLikeIgnoreCase(term + "%" );
+    }
 
 }

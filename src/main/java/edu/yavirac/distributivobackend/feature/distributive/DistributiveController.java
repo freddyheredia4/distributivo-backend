@@ -20,23 +20,27 @@ public class DistributiveController {
     DistributiveService distributiveService;
 
     @GetMapping("/findAll")
-    public List<DistributiveDTO>findAll(){
-        return distributiveService.findAll();
+    public List<DistributiveDTO>findAllDistibutive(){
+        return distributiveService.findAllDistibutive();
     }
 
-    @GetMapping("/findByTeacher/{id}")
-    public List<DistributiveDTO>findByTeacher(@PathVariable long id){
-        return distributiveService.findByTeacher(id);
+    @GetMapping("/findByIdTeacher/{id}")
+    public DistributiveDTO findByTeacherId(@PathVariable long id){
+        return distributiveService.findByTeacherId(id);
     }
 
-    @PostMapping(value="save")
+    @GetMapping("/findByIdDistributive/{id}")
+    public DistributiveDTO findByIdDistributive(@PathVariable long id){
+        return distributiveService.findByIdDistributive(id);
+    }
+        
+    @PostMapping("/save")
     public Distributive save(@RequestBody Distributive distributive) {        
         return distributiveService.save(distributive);
     }
 
-    @GetMapping("/findByName/{dni}")
-    public List<DistributiveDTO> findByName(@PathVariable String dni){
-        return distributiveService.findByName(dni);
+    @GetMapping("/findByTeacherLike/{name}")
+    public List<DistributiveDTO>findByTeacherLike( @PathVariable String name){
+        return distributiveService.findByTeacherLike(name + "%");
     }
-    
 }
