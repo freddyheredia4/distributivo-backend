@@ -10,17 +10,16 @@ public class DistributiveService {
     @Autowired
     DistributiveRepository distributiveRepository;
 
-    public List<DistributiveDTO>findAllDistibutive(){
-        return distributiveRepository.findAllDistibutive();
+    public List<DistributiveDTO>findAll(){
+        return distributiveRepository.findByDistibutiveAll();
+    }
+    
+    public DistributiveDTO findByDistributiveId(long id){
+        return distributiveRepository.findByDistributiveId(id).orElse(new DistributiveDTO());
     }
 
     public DistributiveDTO findByTeacherId(long id){
         return distributiveRepository.findByTeacherId(id).orElse(new DistributiveDTO());
-    }
-    
-
-    public DistributiveDTO findByIdDistributive(long id){
-        return distributiveRepository.findByIdDistributive(id).orElse(new DistributiveDTO());
     }
     
     public Distributive save(Distributive distributive){
@@ -28,8 +27,23 @@ public class DistributiveService {
         
     }
 
-    public List<DistributiveDTO>findByTeacherLike(String name){
-        return distributiveRepository.findByTeacherLikeIgnoreCase(name +  "%");
+    public List<DistributiveDTO>findByTeacherDni(String dni){
+        return distributiveRepository.findByTeacherDni(dni + "%");
     }
 
+    public List<DistributiveDTO>findByTeacherName(String name){
+        return distributiveRepository.findByTeacherName(name + "%");
+    }
+    
+    public List<DistributiveDTO>findByTeacherLastname(String lastname){
+        return distributiveRepository.findByTeacherLastname(lastname + "%");
+}        
+
+    public List<DistributiveDTO>findByPeriodoName(String periodo){
+        return distributiveRepository.findByPeriodoName(periodo + "%");
+    }
+
+    public List<DistributiveDTO>findByCareerName(String career ){
+        return distributiveRepository.findByCareerName(career + "%");
+    }
 }

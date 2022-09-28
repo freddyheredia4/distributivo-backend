@@ -14,4 +14,5 @@ public class Career {
     private Long duration;
     private String img;
     private boolean status;   
+    private String code;
 }
