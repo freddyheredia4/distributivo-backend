@@ -10,7 +10,7 @@ import lombok.Data;
 public class Distributive {
     @Id
     private long id;
-    private  Long schoolTime;
+    private Long schoolTime;
     private Long teacher ;
     private Long course;
     private Long grade;

@@ -11,26 +11,30 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/api/distributive")
-@CrossOrigin({"*"})
+@CrossOrigin({ "*" })
 public class DistributiveController {
     @Autowired
     DistributiveService distributiveService;
 
     @GetMapping("/findAll")
-    public List<DistributiveDTO>findAll(){
+    public List<DistributiveDTO> findAll() {
         return distributiveService.findAll();
     }
 
-    @GetMapping("/findByTeacher/{id}")
-    public List<DistributiveDTO>findByTeacher(@PathVariable long id){
-        return distributiveService.findByTeacher(id);
+    @GetMapping("/findByDistributiveId/{id}")
+    public DistributiveDTO findByIdDistributive(@PathVariable long id) {
+        return distributiveService.findByDistributiveId(id);
     }
 
-    @PostMapping(value="save")
-    public Distributive save(@RequestBody Distributive distributive) {        
+    @GetMapping("/findByIdTeacher/{id}")
+    public DistributiveDTO findByTeacherId(@PathVariable long id) {
+        return distributiveService.findByTeacherId(id);
+    }
+
+    @PostMapping("/save")
+    public Distributive save(@RequestBody Distributive distributive) {
         return distributiveService.save(distributive);
     }
 
@@ -39,9 +43,29 @@ public class DistributiveController {
         return distributiveService.findByName(name);
     }
 
-    @GetMapping("findByEmail/{email}")
-    public List<DistributiveDTO> findByNameTeacher(@PathVariable String email){
-        return distributiveService.findByEmail(email);
+  
+    @GetMapping("/findByTeacherDni/{dni}")
+    public List<DistributiveDTO> findByTeacherDni(@PathVariable String dni) {
+        return distributiveService.findByTeacherDni(dni + "%");
     }
-    
+
+    @GetMapping("/findByTeacherName/{name}")
+    public List<DistributiveDTO> findByTeacherName(@PathVariable String name) {
+        return distributiveService.findByTeacherName(name + "%");
+    }
+
+    @GetMapping("/findByTeacherLastname/{lastname}")
+    public List<DistributiveDTO> findByTeacherLastname(@PathVariable String lastname) {
+        return distributiveService.findByTeacherLastname(lastname + "%");
+    }
+
+    @GetMapping("/findByPeriodoName/{periodo}")
+    public List<DistributiveDTO> findByPeriodoName(@PathVariable String periodo) {
+        return distributiveService.findByPeriodoName(periodo + "%");
+    }
+
+    @GetMapping("/findByCareerName/{career}")
+    public List<DistributiveDTO> findByCareerName(@PathVariable String career) {
+        return distributiveService.findByCareerName(career + "%");
+    }
 }

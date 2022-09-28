@@ -14,4 +14,6 @@ public class Career {
     private Integer duration;
     private String img;
     private boolean status = true;   
+
+    private String code;
 }
