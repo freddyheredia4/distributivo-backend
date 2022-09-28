@@ -1,6 +1,7 @@
 package edu.yavirac.distributivobackend.feature.location;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +63,9 @@ public class LocationController {
     }
     @PostMapping(value = "/import-excel")
     public List<Location> importExcelFile(@RequestParam("file") MultipartFile files) throws IOException {
-        return LocationService.importExcel(files);
+        System.out.println(files.toString());
+        return new ArrayList<Location>();
+        //return LocationService.importExcel(files);
     }
     
     @GetMapping("/export-to-excel")

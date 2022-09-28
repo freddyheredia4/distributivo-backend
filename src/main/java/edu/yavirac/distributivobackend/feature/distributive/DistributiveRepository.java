@@ -17,8 +17,8 @@ public interface DistributiveRepository extends CrudRepository<Distributive, Lon
     
     final String SELECT_FOR_TEACHER_ID = "SELECT dis.id, teacher.dni as teacher_cedula, teacher.name as teacher, teacher.lastname as teacher_apellido, grade.name as grade, subject.name subject,periood.name period FROM teacher_distributive dis JOIN school_period periood ON periood.id = dis.school_time JOIN teacher ON teacher.id = dis.teacher JOIN subject ON subject.id = dis.course JOIN grade ON grade.id = dis.grade WHERE teacher.id=:id";  
     
-    final String SELECT_FOR_TEACHER_NAME = "SELECT dis.id, teacher.dni as teacher_cedula, teacher.name as teacher, teacher.lastname as teacher_apellido, grade.name as grade, subject.name subject,periood.name period FROM teacher_distributive dis JOIN school_period periood ON periood.id = dis.school_time JOIN teacher ON teacher.id = dis.teacher JOIN subject ON subject.id = dis.course JOIN grade ON grade.id = dis.grade WHERE teacher.dni LIKE '%' || :dni || '%' ";
-    final String SELECT_FOR_EMAIL = "SELECT dis.id, teacher.dni as teacher_cedula, teacher.name as teacher, teacher.lastname as teacher_apellido, grade.name as grade, subject.name subject,periood.name period FROM teacher_distributive dis JOIN school_period periood ON periood.id = dis.school_time JOIN teacher ON teacher.id = dis.teacher JOIN subject ON subject.id = dis.course JOIN grade ON grade.id = dis.grade WHERE teacher.email ~*  :email";
+    final String SELECT_FOR_TEACHER_NAME = "SELECT dis.id, teacher.color,teacher.dni as teacher_cedula, teacher.name as teacher, teacher.lastname as teacher_apellido, grade.name as grade, subject.name subject,periood.name period FROM teacher_distributive dis JOIN school_period periood ON periood.id = dis.school_time JOIN teacher ON teacher.id = dis.teacher JOIN subject ON subject.id = dis.course JOIN grade ON grade.id = dis.grade WHERE teacher.name ~* :name ";
+    final String SELECT_FOR_EMAIL = "SELECT dis.id , teacher.color, teacher.dni as teacher_cedula, teacher.name as teacher, teacher.lastname as teacher_apellido, grade.name as grade, subject.name subject,periood.name period FROM teacher_distributive dis JOIN school_period periood ON periood.id = dis.school_time JOIN teacher ON teacher.id = dis.teacher JOIN subject ON subject.id = dis.course JOIN grade ON grade.id = dis.grade WHERE teacher.email ~*  :email";
 
     @Query( SELECT_TEACHER )
     List<DistributiveDTO>findAllDistibutive();
@@ -27,7 +27,7 @@ public interface DistributiveRepository extends CrudRepository<Distributive, Lon
     @Query( SELECT_TEACHER_ID )
     Optional<DistributiveDTO>findByIdDto(@Param("id") Long id);
     @Query( SELECT_FOR_TEACHER_NAME )
-    List<DistributiveDTO>findByNameDni(@Param("dni") String dni);
+    List<DistributiveDTO>findByName(@Param("name") String name);
     @Query(SELECT_FOR_EMAIL)
     List<DistributiveDTO>findByEmail(@Param("email") String email);
 

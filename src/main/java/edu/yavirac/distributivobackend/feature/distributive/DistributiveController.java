@@ -34,9 +34,9 @@ public class DistributiveController {
         return distributiveService.save(distributive);
     }
 
-    @GetMapping("/findByName/{dni}")
-    public List<DistributiveDTO> findByName(@PathVariable String dni){
-        return distributiveService.findByName(dni);
+    @GetMapping("/findByName/{name}")
+    public List<DistributiveDTO> findByName(@PathVariable String name){
+        return distributiveService.findByName(name);
     }
 
     @GetMapping("findByEmail/{email}")

@@ -9,9 +9,9 @@ import lombok.Data;
 @Table("career")
 public class Career {
     @Id
-    private long id;
+    private Long id;
     private String name;
-    private String duration;
+    private Integer duration;
     private String img;
-    private boolean status;   
+    private boolean status = true;   
 }
