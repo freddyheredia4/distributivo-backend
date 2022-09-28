@@ -27,8 +27,8 @@ public class DistributiveService {
 
     }
 
-    public List<DistributiveDTO>findByName(String dni){
-        return distributiveRepository.findByNameDni(dni);
+    public List<DistributiveDTO>findByName(String name){
+        return distributiveRepository.findByName(name);
     }
     public List<DistributiveDTO> findByEmail(String email){
         return distributiveRepository.findByEmail(email);

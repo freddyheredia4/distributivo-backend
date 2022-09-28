@@ -17,4 +17,5 @@ public class DistributiveDTO{
     private String grade;
     private String subject;
     private String period;
+    private String color;
 }
