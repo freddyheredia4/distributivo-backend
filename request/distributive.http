@@ -11,23 +11,25 @@ Authorization:{{tokeen}}
 Content-Type:{{type}}
 
 {
-  
-   "name" : "",
-   "type" : null,
-   "capacity" : null,
-   "location" : null
+  "teacherCedula": "1111",
+   "teacher": "Max",
+   "teacherApellido": "Tito",
+   "grade": "2ro MB-SOFTWARE",
+   "subject": "Estadistica",
+   "period": "2022-2022"
 }
 ###
-PUT {{url}}
+PUT {{url}}/
 Authorization:{{tokeen}}
 Content-Type:{{type}}
 
 {
-  
-   "name" : "",
-   "type" : null,
-   "capacity" : null,
-   "location" : null
+   "teacherCedula": "1111",
+   "teacher": "Max",
+   "teacherApellido": "Tito",
+   "grade": "2ro MB-SOFTWARE",
+   "subject": "Estadistica",
+   "period": "2022-2022"
 }
 
 ###
