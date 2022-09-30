@@ -45,6 +45,11 @@ public class ScheduleControllers {
 
     }
 
+    @PostMapping("/range")
+    public void saveRange(@RequestBody SaveRangeDTO data){
+        scheduleService.saveRange(data);
+    }
+
 
     @GetMapping("delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

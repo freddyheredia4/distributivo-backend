@@ -25,6 +25,9 @@ public interface ScheduleRespository extends CrudRepository<TimeConfiguration, L
     final String GET_HOURS = "SELECT * FROM hours_table";
     final String GET_ID_DIS_TEACHER = "SELECT dis.id FROM teacher_distributive dis JOIN school_period periood ON periood.id= dis.school_time JOIN teacher ON teacher.id=dis.teacher JOIN subject ON subject.id = dis.course  JOIN grade ON grade.id = dis.grade WHERE teacher.name ilike :teacher AND periood.name = :period AND subject.name ILIKE :subject AND grade.name ILIKE :grade";
     final String GET_HOUR_AND_DAY_ID = "SELECT h.id as hour_id, d.id as day_id FROM day d JOIN hours_table h ON h.hour = :hour WHERE d.name ilike :day AND h.hour=:hour";
+    final String SELECT_ID_HOUR ="SELECT id  FROM hours_table h WHERE h.hour=:hour";
+    final String SELECT_ID_DAY ="SELECT id FROM day WHERE day.name ilike :day";
+    final String SELECT_ALL_DAYS = "SELECT * FROM day";
     @Query(GET_SCHEDULE_EVENTS)
     List<ScheduleConsult> findScheduleEvents();
 
@@ -38,8 +41,16 @@ public interface ScheduleRespository extends CrudRepository<TimeConfiguration, L
     @Query(GET_HOURS)
     public List<HourEntity> findHours();
 
+    @Query(SELECT_ID_DAY)
+    public Integer findIdDay(@Param("day") String day );
+    @Query(SELECT_ID_HOUR)
+    public Integer findIdHour(@Param("hour") String hour );
+
     @Query(GET_HOUR_AND_DAY_ID)
     public HourAndDay selectIdHourAndDay(@Param("hour") String hour,@Param("day") String day);
+
+    @Query(SELECT_ALL_DAYS)
+    public List<Day> findAllDays();
     
 
     public static List<ScheduleConsult> findAllFilteredEvents(ScheduleOptionsConsultDto params) {

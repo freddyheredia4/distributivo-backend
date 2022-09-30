@@ -63,9 +63,7 @@ public class LocationController {
     }
     @PostMapping(value = "/import-excel")
     public List<Location> importExcelFile(@RequestParam("file") MultipartFile files) throws IOException {
-        System.out.println(files.toString());
         return new ArrayList<Location>();
-        //return LocationService.importExcel(files);
     }
     
     @GetMapping("/export-to-excel")
