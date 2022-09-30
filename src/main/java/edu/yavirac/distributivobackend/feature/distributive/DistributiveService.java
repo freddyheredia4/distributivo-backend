@@ -18,8 +18,8 @@ public class DistributiveService {
         return distributiveRepository.findByDistributiveId(id).orElse(new DistributiveDTO());
     }
 
-    public DistributiveDTO findByTeacherId(long id){
-        return distributiveRepository.findByTeacherId(id).orElse(new DistributiveDTO());
+    public List<DistributiveDTO> findByTeacherId(long id){
+        return distributiveRepository.findByTeacherId(id);
     }
     
     public Distributive save(Distributive distributive){

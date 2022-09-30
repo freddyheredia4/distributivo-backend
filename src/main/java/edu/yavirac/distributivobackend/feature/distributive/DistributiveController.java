@@ -29,7 +29,7 @@ public class DistributiveController {
     }
 
     @GetMapping("/findByIdTeacher/{id}")
-    public DistributiveDTO findByTeacherId(@PathVariable long id) {
+    public List<DistributiveDTO> findByTeacherId(@PathVariable long id) {
         return distributiveService.findByTeacherId(id);
     }
 

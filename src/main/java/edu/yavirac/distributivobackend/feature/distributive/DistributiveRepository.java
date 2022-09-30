@@ -49,7 +49,7 @@ public interface DistributiveRepository extends CrudRepository<Distributive, Lon
     Optional<DistributiveDTO> findByDistributiveId(@Param("id") Long id);
 
     @Query(FIND_BY_TEACHER_ID)
-    Optional<DistributiveDTO> findByTeacherId(@Param("id") Long id);
+    List<DistributiveDTO> findByTeacherId(@Param("id") Long id);
 
     @Query(FIND_BY_TEACHER_DNI)
     List<DistributiveDTO> findByTeacherDni(@Param("dni") String dni);
