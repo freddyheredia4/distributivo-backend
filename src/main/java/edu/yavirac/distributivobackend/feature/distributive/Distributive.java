@@ -14,4 +14,5 @@ public class Distributive {
     private Long teacher ;
     private Long course;
     private Long grade;
+    private Long career;
 }

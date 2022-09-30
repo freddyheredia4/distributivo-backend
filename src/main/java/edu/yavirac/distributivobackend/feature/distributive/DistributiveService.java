@@ -18,13 +18,20 @@ public class DistributiveService {
         return distributiveRepository.findByDistributiveId(id).orElse(new DistributiveDTO());
     }
 
-    public DistributiveDTO findByTeacherId(long id){
-        return distributiveRepository.findByTeacherId(id).orElse(new DistributiveDTO());
+    public List<DistributiveDTO> findByTeacherId(long id){
+        return distributiveRepository.findByTeacherId(id);
     }
     
     public Distributive save(Distributive distributive){
         return distributiveRepository.save(distributive);
         
+    }
+
+    public List<DistributiveDTO>findByName(String name){
+        return distributiveRepository.findByName(name);
+    }
+    public List<DistributiveDTO> findByEmail(String email){
+        return distributiveRepository.findByEmail(email);
     }
 
     public List<DistributiveDTO>findByTeacherDni(String dni){
